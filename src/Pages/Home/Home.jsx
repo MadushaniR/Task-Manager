@@ -3,10 +3,16 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import mockData from './mockData';
 import { useState } from 'react';
 import Card from '../../Components/Card/Card';
+import PopupForm from '../../Components/PopupForm/PopupForm'; // Import the popup form component
 
 const Home = () => {
     const [data, setData] = useState(mockData);
-    const [newTask, setNewTask] = useState("");  // Add state to handle new task input
+    const [showForm, setShowForm] = useState(false);  // Tracks if the form popup is shown
+    const [currentSection, setCurrentSection] = useState(null); // Track the section where we are adding a task
+    const [newTask, setNewTask] = useState({
+        title: '',
+        description: ''
+    });
 
     const onDragEnd = (result) => {
         if (!result.destination) return;
@@ -39,17 +45,17 @@ const Home = () => {
         }
     };
 
-    const handleAddTask = (e, sectionId) => {
+    const handleAddTask = (e) => {
         e.preventDefault();
-        if (!newTask.trim()) return;  // Prevent empty tasks
+        if (!newTask.title.trim() || !newTask.description.trim()) return;
 
         const newData = data.map(section => {
-            if (section.id === sectionId) {
+            if (section.id === currentSection) {
                 return {
                     ...section,
                     tasks: [
                         ...section.tasks,
-                        { id: Math.random().toString(), title: newTask }  // Add new task
+                        { id: Math.random().toString(), title: newTask.title, description: newTask.description }
                     ]
                 };
             }
@@ -57,7 +63,13 @@ const Home = () => {
         });
 
         setData(newData);
-        setNewTask("");  // Clear the input field after submission
+        setNewTask({ title: '', description: '' });
+        setShowForm(false); // Close the popup
+    };
+
+    const openPopupForm = (sectionId) => {
+        setCurrentSection(sectionId);
+        setShowForm(true);  // Open the popup form
     };
 
     return (
@@ -97,7 +109,8 @@ const Home = () => {
                                                             }}
                                                         >
                                                             <Card>
-                                                                {task.title}
+                                                                <strong>{task.title}</strong>
+                                                                <p>{task.description}</p>
                                                             </Card>
                                                         </div>
                                                     )}
@@ -106,21 +119,26 @@ const Home = () => {
                                         }
                                         {provided.placeholder}
                                     </div>
-                                    <form onSubmit={(e) => handleAddTask(e, section.id)} className="add-task-form">
-                                        <input
-                                            type="text"
-                                            value={newTask}
-                                            onChange={(e) => setNewTask(e.target.value)}
-                                            placeholder="Add new task"
-                                            className="add-task-input"
-                                        />
-                                        <button type="submit" className="add-task-btn">Add Task</button>
-                                    </form>
+                                    {/* Button to trigger popup form */}
+                                    <button
+                                        className="add-task-btn"
+                                        onClick={() => openPopupForm(section.id)}
+                                    >
+                                        Add New Task
+                                    </button>
                                 </div>
                             )}
                         </Droppable>
                     ))
                 }
+                {/* Popup Form */}
+                <PopupForm
+                    show={showForm}
+                    onClose={() => setShowForm(false)}  // Close the popup when needed
+                    onSubmit={handleAddTask}
+                    newTask={newTask}
+                    setNewTask={setNewTask}
+                />
             </div>
         </DragDropContext>
     );
