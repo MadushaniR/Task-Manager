@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
+import { useAuth } from '../../context/AuthContext'; 
 import userImg from '../../assets/person.png';
 import emailImg from '../../assets/email.png';
 import passwordImg from '../../assets/password.png';
@@ -10,10 +12,14 @@ import Button from '../../Components/Button/Button';
 const Login = ({ toggleForm }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate(); 
+    const { login } = useAuth(); 
 
     const handleLogin = () => {
         if (email && password) {
+            login(); 
             alert('Login successful!');
+            navigate('/home'); 
         } else {
             alert('Please fill in both email and password.');
         }
