@@ -1,0 +1,15 @@
+.toggle-text {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+.toggle-link {
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.toggle-link:hover {
+    color: #0056b3;
+}

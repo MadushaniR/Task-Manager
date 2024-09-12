@@ -1,0 +1,20 @@
+.input-field {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .input-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
