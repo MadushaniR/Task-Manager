@@ -1,13 +1,13 @@
 import React from 'react';
 import './PopupForm.css';
 
-const PopupForm = ({ show, onClose, onSubmit, newTask, setNewTask }) => {
-    if (!show) return null; // If `show` is false, don't render the form
+const PopupForm = ({ show, onClose, onSubmit, newTask, setNewTask, isEditMode }) => {
+    if (!show) return null;
 
     return (
         <div className="popup-form-overlay">
             <div className="popup-form">
-                <h3>Add New Task</h3>
+                <h3>{isEditMode ? 'Edit Task' : 'Add New Task'}</h3>
                 <form onSubmit={onSubmit}>
                     <input
                         type="text"
@@ -25,7 +25,9 @@ const PopupForm = ({ show, onClose, onSubmit, newTask, setNewTask }) => {
                         required
                     />
                     <div className="popup-form-buttons">
-                        <button type="submit" className="popup-form-submit-btn">Submit</button>
+                        <button type="submit" className="popup-form-submit-btn">
+                            {isEditMode ? 'Save Changes' : 'Submit'}
+                        </button>
                         <button type="button" className="popup-form-close-btn" onClick={onClose}>Close</button>
                     </div>
                 </form>

@@ -3,12 +3,14 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import mockData from './mockData';
 import { useState } from 'react';
 import Card from '../../Components/Card/Card';
-import PopupForm from '../../Components/PopupForm/PopupForm'; // Import the popup form component
+import PopupForm from '../../Components/PopupForm/PopupForm';
 
 const Home = () => {
     const [data, setData] = useState(mockData);
-    const [showForm, setShowForm] = useState(false);  // Tracks if the form popup is shown
-    const [currentSection, setCurrentSection] = useState(null); // Track the section where we are adding a task
+    const [showForm, setShowForm] = useState(false);
+    const [currentSection, setCurrentSection] = useState(null);
+    const [editingTask, setEditingTask] = useState(null);  // Track task being edited
+    const [isEditMode, setIsEditMode] = useState(false);
     const [newTask, setNewTask] = useState({
         title: '',
         description: ''
@@ -63,17 +65,65 @@ const Home = () => {
         });
 
         setData(newData);
+        resetForm();
+    };
+
+    const handleEditTask = (e) => {
+        e.preventDefault();
+        const newData = data.map(section => {
+            if (section.id === currentSection) {
+                return {
+                    ...section,
+                    tasks: section.tasks.map(task => 
+                        task.id === editingTask.id ? { ...task, title: newTask.title, description: newTask.description } : task
+                    )
+                };
+            }
+            return section;
+        });
+
+        setData(newData);
+        resetForm();
+    };
+
+    const resetForm = () => {
         setNewTask({ title: '', description: '' });
-        setShowForm(false); // Close the popup
+        setEditingTask(null);
+        setShowForm(false);
+        setIsEditMode(false);
     };
 
     const openPopupForm = (sectionId) => {
         setCurrentSection(sectionId);
-        setShowForm(true);  // Open the popup form
+        setShowForm(true);
+        setIsEditMode(false);
+    };
+
+    const openEditForm = (task, sectionId) => {
+        setCurrentSection(sectionId);
+        setEditingTask(task);
+        setNewTask({ title: task.title, description: task.description });
+        setShowForm(true);
+        setIsEditMode(true);
+    };
+
+    const handleDeleteTask = (taskId, sectionId) => {
+        const newData = data.map(section => {
+            if (section.id === sectionId) {
+                return {
+                    ...section,
+                    tasks: section.tasks.filter(task => task.id !== taskId)
+                };
+            }
+            return section;
+        });
+
+        setData(newData);
     };
 
     return (
         <DragDropContext onDragEnd={onDragEnd}>
+     
             <div className="kanban">
                 {
                     data.map(section => (
@@ -111,6 +161,18 @@ const Home = () => {
                                                             <Card>
                                                                 <strong>{task.title}</strong>
                                                                 <p>{task.description}</p>
+                                                                <button
+                                                                    className="edit-task-btn"
+                                                                    onClick={() => openEditForm(task, section.id)}
+                                                                >
+                                                                    Edit
+                                                                </button>
+                                                                <button
+                                                                    className="delete-task-btn"
+                                                                    onClick={() => handleDeleteTask(task.id, section.id)}
+                                                                >
+                                                                    Delete
+                                                                </button>
                                                             </Card>
                                                         </div>
                                                     )}
@@ -119,7 +181,6 @@ const Home = () => {
                                         }
                                         {provided.placeholder}
                                     </div>
-                                    {/* Button to trigger popup form */}
                                     <button
                                         className="add-task-btn"
                                         onClick={() => openPopupForm(section.id)}
@@ -131,17 +192,17 @@ const Home = () => {
                         </Droppable>
                     ))
                 }
-                {/* Popup Form */}
                 <PopupForm
                     show={showForm}
-                    onClose={() => setShowForm(false)}  // Close the popup when needed
-                    onSubmit={handleAddTask}
+                    onClose={resetForm}
+                    onSubmit={isEditMode ? handleEditTask : handleAddTask}
                     newTask={newTask}
                     setNewTask={setNewTask}
+                    isEditMode={isEditMode}
                 />
             </div>
         </DragDropContext>
     );
-}
+};
 
 export default Home;
