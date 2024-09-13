@@ -16,7 +16,8 @@ const Home = () => {
     const [isEditMode, setIsEditMode] = useState(false);
     const [newTask, setNewTask] = useState({
         title: '',
-        description: ''
+        description: '',
+        priority: 'low' // default value
     });
 
     const onDragEnd = (result) => {
@@ -60,7 +61,7 @@ const Home = () => {
                     ...section,
                     tasks: [
                         ...section.tasks,
-                        { id: Math.random().toString(), title: newTask.title, description: newTask.description, priority: 'low' }
+                        { id: Math.random().toString(), title: newTask.title, description: newTask.description, priority: newTask.priority }
                     ]
                 };
             }
@@ -78,7 +79,7 @@ const Home = () => {
                 return {
                     ...section,
                     tasks: section.tasks.map(task =>
-                        task.id === editingTask.id ? { ...task, title: newTask.title, description: newTask.description } : task
+                        task.id === editingTask.id ? { ...task, title: newTask.title, description: newTask.description, priority: newTask.priority } : task
                     )
                 };
             }
@@ -90,7 +91,7 @@ const Home = () => {
     };
 
     const resetForm = () => {
-        setNewTask({ title: '', description: '' });
+        setNewTask({ title: '', description: '', priority: 'low' });
         setEditingTask(null);
         setShowForm(false);
         setIsEditMode(false);
@@ -105,7 +106,7 @@ const Home = () => {
     const openEditForm = (task, sectionId) => {
         setCurrentSection(sectionId);
         setEditingTask(task);
-        setNewTask({ title: task.title, description: task.description });
+        setNewTask({ title: task.title, description: task.description, priority: task.priority });
         setShowForm(true);
         setIsEditMode(true);
     };

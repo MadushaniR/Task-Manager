@@ -36,6 +36,15 @@
     justify-content: space-between;
 }
 
+.popup-form-select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
 .popup-form-submit-btn {
     background-color: #337ab7;
     color: white;

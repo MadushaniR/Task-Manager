@@ -4,6 +4,10 @@ import './PopupForm.css';
 const PopupForm = ({ show, onClose, onSubmit, newTask, setNewTask, isEditMode }) => {
     if (!show) return null;
 
+    const handlePriorityChange = (e) => {
+        setNewTask({ ...newTask, priority: e.target.value });
+    };
+
     return (
         <div className="popup-form-overlay">
             <div className="popup-form">
@@ -24,6 +28,16 @@ const PopupForm = ({ show, onClose, onSubmit, newTask, setNewTask, isEditMode })
                         className="popup-form-input"
                         required
                     />
+                    <select
+                        value={newTask.priority}
+                        onChange={handlePriorityChange}
+                        className="popup-form-select"
+                        required
+                    >
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
                     <div className="popup-form-buttons">
                         <button type="submit" className="popup-form-submit-btn">
                             {isEditMode ? 'Save Changes' : 'Submit'}
