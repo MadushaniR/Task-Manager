@@ -1,8 +1,8 @@
-body {
+/* body {
     min-height: 100vh;
     background: rgb(18, 23, 32);
     background: linear-gradient(339deg, rgb(18, 23, 32) 33%, rgb(27, 35, 47) 72%, rgb(30, 38, 52) 89%, rgb(36, 54, 82) 100%);
-}
+} */
 
 .toggle-text {
     margin-top: 10px;

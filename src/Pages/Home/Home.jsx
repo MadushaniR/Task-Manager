@@ -5,16 +5,19 @@ import { useState } from 'react';
 import Card from '../../Components/Card/Card';
 import PopupForm from '../../Components/PopupForm/PopupForm';
 import Nav from '../../Components/NavigationBar/Nav';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrashAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Home = () => {
     const [data, setData] = useState(mockData);
     const [showForm, setShowForm] = useState(false);
     const [currentSection, setCurrentSection] = useState(null);
-    const [editingTask, setEditingTask] = useState(null);  // Track task being edited
+    const [editingTask, setEditingTask] = useState(null);
     const [isEditMode, setIsEditMode] = useState(false);
     const [newTask, setNewTask] = useState({
         title: '',
-        description: ''
+        description: '',
+        priority: 'low'
     });
 
     const onDragEnd = (result) => {
@@ -58,7 +61,7 @@ const Home = () => {
                     ...section,
                     tasks: [
                         ...section.tasks,
-                        { id: Math.random().toString(), title: newTask.title, description: newTask.description }
+                        { id: Math.random().toString(), title: newTask.title, description: newTask.description, priority: newTask.priority }
                     ]
                 };
             }
@@ -76,7 +79,7 @@ const Home = () => {
                 return {
                     ...section,
                     tasks: section.tasks.map(task =>
-                        task.id === editingTask.id ? { ...task, title: newTask.title, description: newTask.description } : task
+                        task.id === editingTask.id ? { ...task, title: newTask.title, description: newTask.description, priority: newTask.priority } : task
                     )
                 };
             }
@@ -88,7 +91,7 @@ const Home = () => {
     };
 
     const resetForm = () => {
-        setNewTask({ title: '', description: '' });
+        setNewTask({ title: '', description: '', priority: 'low' });
         setEditingTask(null);
         setShowForm(false);
         setIsEditMode(false);
@@ -103,7 +106,7 @@ const Home = () => {
     const openEditForm = (task, sectionId) => {
         setCurrentSection(sectionId);
         setEditingTask(task);
-        setNewTask({ title: task.title, description: task.description });
+        setNewTask({ title: task.title, description: task.description, priority: task.priority });
         setShowForm(true);
         setIsEditMode(true);
     };
@@ -122,11 +125,29 @@ const Home = () => {
         setData(newData);
     };
 
+    const getTaskCount = (sectionId) => {
+        const section = data.find(section => section.id === sectionId);
+        return section ? section.tasks.length : 0;
+    };
+
+    const getPriorityClass = (priority) => {
+        switch (priority) {
+            case 'high':
+                return 'priority-tag high';
+            case 'medium':
+                return 'priority-tag medium';
+            case 'low':
+                return 'priority-tag low';
+            default:
+                return '';
+        }
+    };
+
+
     return (
         <>
             <Nav />
             <DragDropContext onDragEnd={onDragEnd}>
-
                 <div className="kanban">
                     {
                         data.map(section => (
@@ -142,6 +163,7 @@ const Home = () => {
                                     >
                                         <div className="kanban__section__title">
                                             {section.title}
+                                            <span className="task-count">({getTaskCount(section.id)})</span>
                                         </div>
                                         <div className="kanban__section__content">
                                             {
@@ -162,19 +184,24 @@ const Home = () => {
                                                                 }}
                                                             >
                                                                 <Card>
-                                                                    <strong>{task.title}</strong>
-                                                                    <p>{task.description}</p>
+                                                                    <div className="task-header">
+                                                                        <div className="task-title">{task.title}</div>
+                                                                        <span className={getPriorityClass(task.priority)}>
+                                                                            {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div className="task-des">{task.description}</div>
                                                                     <button
                                                                         className="edit-task-btn"
                                                                         onClick={() => openEditForm(task, section.id)}
                                                                     >
-                                                                        Edit
+                                                                        <FontAwesomeIcon icon={faEdit} />
                                                                     </button>
                                                                     <button
                                                                         className="delete-task-btn"
                                                                         onClick={() => handleDeleteTask(task.id, section.id)}
                                                                     >
-                                                                        Delete
+                                                                        <FontAwesomeIcon icon={faTrashAlt} />
                                                                     </button>
                                                                 </Card>
                                                             </div>
@@ -188,7 +215,7 @@ const Home = () => {
                                             className="add-task-btn"
                                             onClick={() => openPopupForm(section.id)}
                                         >
-                                            Add New Task
+                                            <FontAwesomeIcon icon={faPlus} />
                                         </button>
                                     </div>
                                 )}
