@@ -17,6 +17,7 @@ body {
     margin: 10px;
     margin-bottom: 20px;
     font-weight: 400;
+    text-align: justify;
 }
 
 .task-title {

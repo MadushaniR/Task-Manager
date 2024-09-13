@@ -8,15 +8,15 @@
     padding: 2rem;
     max-width: 1000px;
     margin: auto;
-    background-color: #f4f4f4;
+    background-color: rgb(2, 29, 57);
     border-radius: 8px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 70px -10px rgba(102, 102, 255, 0.6);
     margin-top: 2rem;
     margin-bottom: 100px;
 }
 
 h1 {
-    color: #333;
+    color: #fff;
     font-size: 2.5rem;
     margin-bottom: 1rem;
     text-align: center;
@@ -30,25 +30,26 @@ h1 {
 }
 
 .grid-item {
-    background: #fff;
+    background-color: #33a0a3;
     border-radius: 8px;
     padding: 1.5rem;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 70px -10px rgba(102, 102, 255, 0.6);
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .grid-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 2px 70px -10px rgba(102, 102, 255, 0.6);
 }
 
 h2 {
-    color: #333;
+    color: #232323;
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
 }
 
 p {
     font-size: 1rem;
-    color: #666;
+    color: #fff;
+    text-align: justify;
 }
