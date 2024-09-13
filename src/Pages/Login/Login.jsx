@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom'; 
 import { useAuth } from '../../context/AuthContext'; 
 import emailImg from '../../assets/email.png';
 import passwordImg from '../../assets/password.png';
@@ -44,7 +44,7 @@ const Login = ({ toggleForm }) => {
             <p className="toggle-text">
                 Don't have an account?{' '}
                 <span className="toggle-link" onClick={toggleForm}>
-                    Register here
+                <Link to="/register">Register Here</Link>
                 </span>
             </p>
         </FormContainer>
