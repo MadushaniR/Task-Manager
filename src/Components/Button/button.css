@@ -1,16 +1,20 @@
 .button {
-    padding: 10px 20px;
-    background-color: #33a0a3;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 20px;
-    width: 100%;
-  }
-  
-  .button:hover {
-    background-color: #2d8f93;
-  }
-  
+  padding: 10px 20px;
+  background-color: #33a0a3;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 20px auto 0 auto;
+  width: 50%; 
+  display: block;
+  font-family: "Noto Sans Nandinagari", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+
+}
+
+.button:hover {
+  background-color: #2d8f93;
+}

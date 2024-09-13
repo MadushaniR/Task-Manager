@@ -1,24 +1,8 @@
-import React, { useState } from 'react';
-import './App.css';
-import Login from './Pages/Login/Login';
-import Register from './Pages/Register/Register';
+import React from 'react';
+import AppRouter from './routes/AppRouter';
 
 function App() {
-  const [isLogin, setIsLogin] = useState(true);
-
-  const toggleForm = () => {
-    setIsLogin(!isLogin);
-  };
-
-  return (
-    <div className="App">
-      {isLogin ? (
-        <Login toggleForm={toggleForm} />
-      ) : (
-        <Register toggleForm={toggleForm} />
-      )}
-    </div>
-  );
+    return <AppRouter />;
 }
 
 export default App;
