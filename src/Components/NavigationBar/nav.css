@@ -8,6 +8,12 @@
     color: white;
 }
 
+.nav-logo {
+    height: 40px; 
+    width: auto;
+}
+
+
 .nav-left a,
 .nav-right a {
     color: white;

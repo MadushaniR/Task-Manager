@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './nav.css';
+import todoImg from '../../assets/todoImg.png'; 
 
 const Nav = () => {
     const [username, setUsername] = useState(null);
@@ -22,7 +23,9 @@ const Nav = () => {
     return (
         <nav className="navbar">
             <div className="nav-left">
-                <Link to="/">Home</Link>
+                <Link to="/home">
+                    <img src={todoImg} alt="Home" className="nav-logo" />
+                </Link>
             </div>
             <div className="nav-right">
                 {username ? (
