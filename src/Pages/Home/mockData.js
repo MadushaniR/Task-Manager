@@ -49,8 +49,8 @@ const mockData = [
         tasks: [
             {
                 id: uuidv4(),
-                title: 'Learn GIT',
-                description: 'Learn GIT to manage your codebase.',
+                title: 'Learn CSS',
+                description: 'Learn CSS to style your websites.',
                 priority: 'high' 
             }
         ]
