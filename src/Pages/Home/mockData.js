@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from 'uuid'
-
 const mockData = [
     {
         id: uuidv4(),
@@ -9,20 +8,20 @@ const mockData = [
                 id: uuidv4(),
                 title: 'Learn JavaScript',
                 description: 'Learn JavaScript to build interactive websites.',
-                priority: 'High'
+                priority: 'high' // changed to lowercase
 
             },
             {
                 id: uuidv4(),
                 title: 'Learn Git',
                 description: 'Learn Git to manage your codebase.',
-                priority: 'Low'
+                priority: 'low' // changed to lowercase
             },
             {
                 id: uuidv4(),
                 title: 'Learn Python',
                 description: 'Learn Python to build web applications.',
-                priority: 'Medium'
+                priority: 'medium' // changed to lowercase
             },
         ]
     },
@@ -34,13 +33,13 @@ const mockData = [
                 id: uuidv4(),
                 title: 'Learn CSS',
                 description: 'Learn CSS to style your websites.',
-                priority: 'Low'
+                priority: 'low' // changed to lowercase
             },
             {
                 id: uuidv4(),
                 title: 'Learn Golang',
                 description: 'Learn Golang to build scalable applications.',
-                priority: 'Medium'
+                priority: 'medium' // changed to lowercase
             }
         ]
     },
@@ -52,7 +51,7 @@ const mockData = [
                 id: uuidv4(),
                 title: 'Learn GIT',
                 description: 'Learn GIT to manage your codebase.',
-                priority: 'High'
+                priority: 'high' // changed to lowercase
             }
         ]
     },
@@ -64,10 +63,10 @@ const mockData = [
                 id: uuidv4(),
                 title: 'Learn HTML',
                 description: 'Learn HTML to create web pages.',
-                priority: 'Low'
+                priority: 'low' // changed to lowercase
             }
         ]
     }
-]
+];
 
-export default mockData
+export default mockData;

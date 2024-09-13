@@ -133,15 +133,16 @@ const Home = () => {
     const getPriorityClass = (priority) => {
         switch (priority) {
             case 'high':
-                return 'priority-tag.high';
+                return 'priority-tag high';
             case 'medium':
-                return 'priority-tag.medium';
+                return 'priority-tag medium';
             case 'low':
-                return 'priority-tag.low';
+                return 'priority-tag low';
             default:
                 return '';
         }
     };
+    
 
     return (
         <>
