@@ -60,7 +60,7 @@ const Login = ({ toggleForm }) => {
         <FormContainer title="Login">
             <InputField
                 type="email"
-                placeholder="Enter your email"
+                placeholder="Email"
                 icon={emailImg}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -68,7 +68,7 @@ const Login = ({ toggleForm }) => {
             />
             <InputField
                 type="password"
-                placeholder="Enter your password"
+                placeholder="Password"
                 icon={passwordImg}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

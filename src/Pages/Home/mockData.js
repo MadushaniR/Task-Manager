@@ -40,6 +40,17 @@ const mockData = [
     },
     {
         id: uuidv4(),
+        title: ' ✔️ Review',
+        tasks: [
+            {
+                id: uuidv4(),
+                title: 'Learn GIT',
+                description: 'Learn GIT to manage your codebase.'
+            }
+        ]
+    },
+    {
+        id: uuidv4(),
         title: ' ✔️ Completed',
         tasks: [
             {
