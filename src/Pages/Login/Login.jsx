@@ -8,13 +8,15 @@ import InputField from '../../Components/InputField/InputField';
 import FormContainer from '../../Components/FormContainer/FormContainer';
 import Button from '../../Components/Button/Button';
 import CryptoJS from 'crypto-js';
+import FeedbackPopup from '../../Components/FeedbackPopup/FeedbackPopup';
 
 const Login = ({ toggleForm }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    const [message, setMessage] = useState('');
+    const [popupMessage, setPopupMessage] = useState(null); // Popup message
+    const [popupType, setPopupType] = useState(''); // Popup type ('success' or 'error')
     const navigate = useNavigate();
     const { login } = useAuth();
 
@@ -22,7 +24,6 @@ const Login = ({ toggleForm }) => {
         let isValid = true;
         setEmailError('');
         setPasswordError('');
-        setMessage('');
 
         if (!email) {
             setEmailError('Email is required.');
@@ -43,17 +44,24 @@ const Login = ({ toggleForm }) => {
 
                 if (storedUser.email === email && decryptedPassword === password) {
                     login(email);
-                    setMessage('Login successful!');
+                    setPopupType('success');
+                    setPopupMessage('Login successful!');
                     setTimeout(() => {
                         navigate('/home');
                     }, 1000);
                 } else {
-                    setMessage('Invalid credentials. Please try again.');
+                    setPopupType('error');
+                    setPopupMessage('Invalid credentials. Please try again.');
                 }
             } else {
-                setMessage('No registered users found. Please register first.');
+                setPopupType('error');
+                setPopupMessage('No registered users found. Please register first.');
             }
         }
+    };
+
+    const closePopup = () => {
+        setPopupMessage(null);
     };
 
     return (
@@ -75,7 +83,6 @@ const Login = ({ toggleForm }) => {
                 error={passwordError}
             />
             <Button text="Login" onClick={handleLogin} />
-            {message && <p className="message">{message}</p>}
 
             <p className="toggle-text">
                 Don't have an account?{' '}
@@ -83,6 +90,14 @@ const Login = ({ toggleForm }) => {
                     <Link to="/register">Register Here</Link>
                 </span>
             </p>
+
+            {popupMessage && (
+                <FeedbackPopup
+                    message={popupMessage}
+                    type={popupType}
+                    onClose={closePopup}
+                />
+            )}
         </FormContainer>
     );
 };

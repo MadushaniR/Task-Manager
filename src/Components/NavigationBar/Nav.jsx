@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './nav.css';
 import todoImg from '../../assets/todoImg.png';
-import { FaUserCircle } from 'react-icons/fa'; // Import Font Awesome user icon
+import { FaUserCircle } from 'react-icons/fa'; 
 
 const Nav = () => {
     const [username, setUsername] = useState(null);

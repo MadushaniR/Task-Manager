@@ -8,6 +8,7 @@ import InputField from '../../Components/InputField/InputField';
 import FormContainer from '../../Components/FormContainer/FormContainer';
 import Button from '../../Components/Button/Button';
 import CryptoJS from 'crypto-js';
+import FeedbackPopup from '../../Components/FeedbackPopup/FeedbackPopup';
 
 const Register = ({ toggleForm }) => {
     const [email, setEmail] = useState('');
@@ -15,7 +16,8 @@ const Register = ({ toggleForm }) => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errors, setErrors] = useState({});
-    const [message, setMessage] = useState('');
+    const [popupMessage, setPopupMessage] = useState(null); // Popup message
+    const [popupType, setPopupType] = useState(''); // Popup type ('success' or 'error')
     const navigate = useNavigate();
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -64,13 +66,19 @@ const Register = ({ toggleForm }) => {
             const userData = { name, email, password: encryptedPassword };
             localStorage.setItem('user', JSON.stringify(userData));
 
-            setMessage('Registration successful!');
+            setPopupType('success');
+            setPopupMessage('Registration successful!');
             setTimeout(() => {
                 navigate('/login');
             }, 1000);
         } else {
-            setMessage('Registration failed. Please try again.');
+            setPopupType('error');
+            setPopupMessage('Registration failed. Please try again.');
         }
+    };
+
+    const closePopup = () => {
+        setPopupMessage(null);
     };
 
     return (
@@ -113,14 +121,20 @@ const Register = ({ toggleForm }) => {
 
             <Button text="Register" onClick={handleRegister} />
 
-            {message && <p className="message">{message}</p>}
-
             <p className="toggle-text">
                 Already have an account?{' '}
                 <Link to="/login" className="toggle-link">
                     Login here
                 </Link>
             </p>
+
+            {popupMessage && (
+                <FeedbackPopup
+                    message={popupMessage}
+                    type={popupType}
+                    onClose={closePopup}
+                />
+            )}
         </FormContainer>
     );
 };
