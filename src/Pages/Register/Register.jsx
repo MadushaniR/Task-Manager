@@ -7,7 +7,7 @@ import './register.css';
 import InputField from '../../Components/InputField/InputField';
 import FormContainer from '../../Components/FormContainer/FormContainer';
 import Button from '../../Components/Button/Button';
-import CryptoJS from 'crypto-js'; // Importing crypto-js for encryption
+import CryptoJS from 'crypto-js';
 
 const Register = ({ toggleForm }) => {
     const [email, setEmail] = useState('');
@@ -55,15 +55,12 @@ const Register = ({ toggleForm }) => {
             return;
         }
 
-       
         const registrationSuccess = true;
 
         if (registrationSuccess) {
-         
-            const secretKey = 'mySecretKey'; 
+            const secretKey = 'mySecretKey';
             const encryptedPassword = CryptoJS.AES.encrypt(password, secretKey).toString();
 
-          
             const userData = { name, email, password: encryptedPassword };
             localStorage.setItem('user', JSON.stringify(userData));
 
@@ -80,42 +77,42 @@ const Register = ({ toggleForm }) => {
         <FormContainer title="Register">
             <InputField
                 type="text"
-                placeholder="Enter your name"
+                placeholder="Name"
                 icon={userImg}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                error={errors.name}
             />
-            {errors.name && <p className="error">{errors.name}</p>}
-            
+
             <InputField
                 type="email"
-                placeholder="Enter your email"
+                placeholder="Email"
                 icon={emailImg}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                error={errors.email}
             />
-            {errors.email && <p className="error">{errors.email}</p>}
 
             <InputField
                 type="password"
-                placeholder="Enter your password"
+                placeholder="Password"
                 icon={passwordImg}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                error={errors.password}
             />
-            {errors.password && <p className="error">{errors.password}</p>}
 
             <InputField
                 type="password"
-                placeholder="Confirm your password"
+                placeholder="Confirm Password"
                 icon={passwordImg}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
+                error={errors.confirmPassword}
             />
-            {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
 
             <Button text="Register" onClick={handleRegister} />
-            
+
             {message && <p className="message">{message}</p>}
 
             <p className="toggle-text">

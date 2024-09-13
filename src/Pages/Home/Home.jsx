@@ -75,7 +75,7 @@ const Home = () => {
             if (section.id === currentSection) {
                 return {
                     ...section,
-                    tasks: section.tasks.map(task => 
+                    tasks: section.tasks.map(task =>
                         task.id === editingTask.id ? { ...task, title: newTask.title, description: newTask.description } : task
                     )
                 };
@@ -124,87 +124,87 @@ const Home = () => {
 
     return (
         <>
-        <Nav />
-        <DragDropContext onDragEnd={onDragEnd}>
-     
-            <div className="kanban">
-                {
-                    data.map(section => (
-                        <Droppable
-                            key={section.id}
-                            droppableId={section.id}
-                        >
-                            {(provided) => (
-                                <div
-                                    {...provided.droppableProps}
-                                    className='kanban__section'
-                                    ref={provided.innerRef}
-                                >
-                                    <div className="kanban__section__title">
-                                        {section.title}
-                                    </div>
-                                    <div className="kanban__section__content">
-                                        {
-                                            section.tasks.map((task, index) => (
-                                                <Draggable
-                                                    key={task.id}
-                                                    draggableId={task.id}
-                                                    index={index}
-                                                >
-                                                    {(provided, snapshot) => (
-                                                        <div
-                                                            ref={provided.innerRef}
-                                                            {...provided.draggableProps}
-                                                            {...provided.dragHandleProps}
-                                                            style={{
-                                                                ...provided.draggableProps.style,
-                                                                opacity: snapshot.isDragging ? '0.5' : '1'
-                                                            }}
-                                                        >
-                                                            <Card>
-                                                                <strong>{task.title}</strong>
-                                                                <p>{task.description}</p>
-                                                                <button
-                                                                    className="edit-task-btn"
-                                                                    onClick={() => openEditForm(task, section.id)}
-                                                                >
-                                                                    Edit
-                                                                </button>
-                                                                <button
-                                                                    className="delete-task-btn"
-                                                                    onClick={() => handleDeleteTask(task.id, section.id)}
-                                                                >
-                                                                    Delete
-                                                                </button>
-                                                            </Card>
-                                                        </div>
-                                                    )}
-                                                </Draggable>
-                                            ))
-                                        }
-                                        {provided.placeholder}
-                                    </div>
-                                    <button
-                                        className="add-task-btn"
-                                        onClick={() => openPopupForm(section.id)}
+            <Nav />
+            <DragDropContext onDragEnd={onDragEnd}>
+
+                <div className="kanban">
+                    {
+                        data.map(section => (
+                            <Droppable
+                                key={section.id}
+                                droppableId={section.id}
+                            >
+                                {(provided) => (
+                                    <div
+                                        {...provided.droppableProps}
+                                        className='kanban__section'
+                                        ref={provided.innerRef}
                                     >
-                                        Add New Task
-                                    </button>
-                                </div>
-                            )}
-                        </Droppable>
-                    ))
-                }
-                <PopupForm
-                    show={showForm}
-                    onClose={resetForm}
-                    onSubmit={isEditMode ? handleEditTask : handleAddTask}
-                    newTask={newTask}
-                    setNewTask={setNewTask}
-                    isEditMode={isEditMode}
-                />
-            </div>
-        </DragDropContext>
+                                        <div className="kanban__section__title">
+                                            {section.title}
+                                        </div>
+                                        <div className="kanban__section__content">
+                                            {
+                                                section.tasks.map((task, index) => (
+                                                    <Draggable
+                                                        key={task.id}
+                                                        draggableId={task.id}
+                                                        index={index}
+                                                    >
+                                                        {(provided, snapshot) => (
+                                                            <div
+                                                                ref={provided.innerRef}
+                                                                {...provided.draggableProps}
+                                                                {...provided.dragHandleProps}
+                                                                style={{
+                                                                    ...provided.draggableProps.style,
+                                                                    opacity: snapshot.isDragging ? '0.5' : '1'
+                                                                }}
+                                                            >
+                                                                <Card>
+                                                                    <strong>{task.title}</strong>
+                                                                    <p>{task.description}</p>
+                                                                    <button
+                                                                        className="edit-task-btn"
+                                                                        onClick={() => openEditForm(task, section.id)}
+                                                                    >
+                                                                        Edit
+                                                                    </button>
+                                                                    <button
+                                                                        className="delete-task-btn"
+                                                                        onClick={() => handleDeleteTask(task.id, section.id)}
+                                                                    >
+                                                                        Delete
+                                                                    </button>
+                                                                </Card>
+                                                            </div>
+                                                        )}
+                                                    </Draggable>
+                                                ))
+                                            }
+                                            {provided.placeholder}
+                                        </div>
+                                        <button
+                                            className="add-task-btn"
+                                            onClick={() => openPopupForm(section.id)}
+                                        >
+                                            Add New Task
+                                        </button>
+                                    </div>
+                                )}
+                            </Droppable>
+                        ))
+                    }
+                    <PopupForm
+                        show={showForm}
+                        onClose={resetForm}
+                        onSubmit={isEditMode ? handleEditTask : handleAddTask}
+                        newTask={newTask}
+                        setNewTask={setNewTask}
+                        isEditMode={isEditMode}
+                    />
+                </div>
+            </DragDropContext>
         </>
     );
 };
