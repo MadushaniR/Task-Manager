@@ -52,7 +52,7 @@ const PopupForm = ({ show, onClose, onSubmit, newTask, setNewTask, isEditMode })
                         </select>
                     </div>
                     <div className="popup-buttons">
-                        <button type="submit" className="popup-button"> {isEditMode ? 'Save Changes' : 'Submit'} </button>
+                        <button type="submit" className="popup-button"> {isEditMode ? 'Save' : 'Submit'} </button>
                         <button type="button" className="popup-button popup-cancel-btn" onClick={onClose}>Cancel</button>
                     </div>
                 </form>

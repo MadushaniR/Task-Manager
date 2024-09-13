@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from '../context/AuthContext';
 import Login from '../Pages/Login/Login';
 import Register from '../Pages/Register/Register';
 import Home from '../Pages/Home/Home';
+import Help from '../Pages/Help/Help';
 
 const PrivateRoute = ({ children }) => {
     const { isAuthenticated } = useAuth();
@@ -17,7 +18,8 @@ const AppRouter = () => (
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
-                <Route path="*" element={<Navigate to="/login" />} /> 
+                <Route path="*" element={<Navigate to="/login" />} />
+                <Route path="/help" element={<Help />} />
             </Routes>
         </Router>
     </AuthProvider>

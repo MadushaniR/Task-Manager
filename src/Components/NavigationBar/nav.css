@@ -6,6 +6,29 @@
     background-color: rgb(2, 29, 57);
     padding: 1rem;
     color: white;
+    position: relative;
+}
+
+.nav-left {
+    flex: 1;
+}
+
+.nav-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.nav-logo-container {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
 }
 
 .nav-logo {
@@ -13,26 +36,44 @@
     width: auto;
 }
 
+.app-name {
+    font-family: 'Dancing Script', cursive; 
+    font-size: 1.5rem;
+    color: #33a0a3; 
+    margin-left: 0.5rem;
+    font-weight: 800;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+}
 
-.nav-left a,
-.nav-right a {
+.nav-option {
     color: white;
     text-decoration: none;
+    font-weight: 600;
     margin: 0 1rem;
 }
 
-.nav-left a:hover,
-.nav-right a:hover {
-    text-decoration: underline;
+.nav-option:hover {
+    color: #c1cde6;
 }
 
-.nav-right span {
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-icon {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+    color: #FFD700;
+}
+
+.username {
     color: #FFD700;
     margin-right: 1rem;
 }
 
 .logout-button {
-    background-color: #f087e0;
+    background-color: #7d1a6e;
     font-family: "Noto Sans Nandinagari", sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -40,10 +81,9 @@
     color: white;
     padding: 0.5rem 1rem;
     cursor: pointer;
-    margin-left: 1rem;
     border-radius: 4px;
 }
 
 .logout-button:hover {
-    background-color: #FF6347;
+    background-color: #781669;
 }

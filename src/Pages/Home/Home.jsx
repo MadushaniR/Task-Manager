@@ -12,12 +12,12 @@ const Home = () => {
     const [data, setData] = useState(mockData);
     const [showForm, setShowForm] = useState(false);
     const [currentSection, setCurrentSection] = useState(null);
-    const [editingTask, setEditingTask] = useState(null);  
+    const [editingTask, setEditingTask] = useState(null);
     const [isEditMode, setIsEditMode] = useState(false);
     const [newTask, setNewTask] = useState({
         title: '',
         description: '',
-        priority: 'low' // default value
+        priority: 'low'
     });
 
     const onDragEnd = (result) => {
@@ -142,7 +142,7 @@ const Home = () => {
                 return '';
         }
     };
-    
+
 
     return (
         <>
@@ -185,12 +185,12 @@ const Home = () => {
                                                             >
                                                                 <Card>
                                                                     <div className="task-header">
-                                                                        <strong>{task.title}</strong>
+                                                                        <div className="task-title">{task.title}</div>
                                                                         <span className={getPriorityClass(task.priority)}>
                                                                             {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
                                                                         </span>
                                                                     </div>
-                                                                    <p>{task.description}</p>
+                                                                    <div className="task-des">{task.description}</div>
                                                                     <button
                                                                         className="edit-task-btn"
                                                                         onClick={() => openEditForm(task, section.id)}
