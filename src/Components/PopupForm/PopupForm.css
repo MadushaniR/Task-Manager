@@ -1,95 +1,105 @@
-.popup-form-overlay {
+.popup-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-family: "Noto Sans Nandinagari", sans-serif;
+    z-index: 1000;
 }
 
 .popup-form {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(102, 102, 255, 0.7);
+    background-color: rgb(2, 29, 57);
+    padding: 30px;
+    border-radius: 8px;
     width: 400px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    color: white;
+    text-align: center;
+    position: relative;
 }
 
-.popup-form h3 {
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.close-button:hover {
+    color: #f44336;
+}
+
+.popup-title {
+    font-size: 22px;
     margin-bottom: 20px;
+    color: #fff;
 }
 
-.popup-form-input {
+.popup-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.popup-input-container {
+    margin-bottom: 15px;
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
+    text-align: left;
 }
 
-.popup-form-buttons {
+.popup-input-label {
+    margin-bottom: 5px;
+    display: block;
+    font-size: 14px;
+    color: #fff;
+}
+
+.popup-input-field {
+    width: calc(100% - 24px);
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid #777;
+    background-color: #fff;
+    color: #000;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.popup-buttons {
     display: flex;
     justify-content: space-between;
+    width: 60%;
 }
 
-.popup-form-select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-
-.popup-form-submit-btn {
-    background-color: #337ab7;
+.popup-button {
+    background-color: #33a0a3;
     color: white;
-    padding: 10px 15px;
+    padding: 8px 16px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    width: 35%;
+    transition: background-color 0.3s;
 }
 
-.popup-form-submit-btn:hover {
-    background-color: #286090;
+.popup-button:hover {
+    background-color: #28b0b3;
 }
 
-.popup-form-close-btn {
-    background-color: #d9534f;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.popup-form-close-btn:hover {
-    background-color: #c9302c;
-}
-
-.edit-task-btn,
-.delete-task-btn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 5px 10px;
-    margin-right: 5px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.delete-task-btn {
+.popup-cancel-btn {
     background-color: #f44336;
 }
 
-.edit-task-btn:hover {
-    background-color: #45a049;
-}
-
-.delete-task-btn:hover {
-    background-color: #d32f2f;
+.popup-cancel-btn:hover {
+    background-color: #e53935;
 }
