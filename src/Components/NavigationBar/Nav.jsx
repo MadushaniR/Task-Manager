@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './nav.css';
-import { useAuth } from '../../context/AuthContext';
 
 const Nav = () => {
-    const { isAuthenticated, user } = useAuth(); // Access user from context
+    const [username, setUsername] = useState(null); 
+
+    useEffect(() => {
+   
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+
+        if (storedUser && storedUser.name) {
+            setUsername(storedUser.name); 
+        }
+    }, []);
 
     return (
         <nav className="navbar">
@@ -12,8 +20,8 @@ const Nav = () => {
                 <Link to="/">Home</Link>
             </div>
             <div className="nav-right">
-                {isAuthenticated ? (
-                    <span>Welcome, {user}</span>  // Display username
+                {username ? (
+                    <span>Welcome, {username}</span>  
                 ) : (
                     <Link to="/login">Login</Link>
                 )}

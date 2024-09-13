@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate for programmatic navigation
+import { useNavigate, Link } from 'react-router-dom';
 import userImg from '../../assets/person.png';
 import emailImg from '../../assets/email.png';
 import passwordImg from '../../assets/password.png';
@@ -7,6 +7,7 @@ import './register.css';
 import InputField from '../../Components/InputField/InputField';
 import FormContainer from '../../Components/FormContainer/FormContainer';
 import Button from '../../Components/Button/Button';
+import CryptoJS from 'crypto-js'; // Importing crypto-js for encryption
 
 const Register = ({ toggleForm }) => {
     const [email, setEmail] = useState('');
@@ -14,38 +15,31 @@ const Register = ({ toggleForm }) => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errors, setErrors] = useState({});
-    const [message, setMessage] = useState(''); // State to handle success or failure messages
-    const navigate = useNavigate(); // Hook for navigation
+    const [message, setMessage] = useState('');
+    const navigate = useNavigate();
 
-    // Email validation regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    // Password validation (at least 8 characters, including a number and a special character)
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     const validate = () => {
         const newErrors = {};
 
-        // Name validation
         if (!name.trim()) {
             newErrors.name = 'Name is required';
         }
 
-        // Email validation
         if (!email.trim()) {
             newErrors.email = 'Email is required';
         } else if (!emailRegex.test(email)) {
             newErrors.email = 'Invalid email format';
         }
 
-        // Password validation
         if (!password) {
             newErrors.password = 'Password is required';
         } else if (!passwordRegex.test(password)) {
             newErrors.password = 'Password must be at least 8 characters long and include a number and a special character';
         }
 
-        // Confirm password validation
         if (!confirmPassword) {
             newErrors.confirmPassword = 'Confirm password is required';
         } else if (password !== confirmPassword) {
@@ -58,18 +52,25 @@ const Register = ({ toggleForm }) => {
 
     const handleRegister = () => {
         if (!validate()) {
-            return; // Don't proceed if validation fails
+            return;
         }
 
-        // Simulate a registration process
-        // You should replace this with an actual API call
-        const registrationSuccess = true; // Simulate success or failure
+       
+        const registrationSuccess = true;
 
         if (registrationSuccess) {
+         
+            const secretKey = 'mySecretKey'; 
+            const encryptedPassword = CryptoJS.AES.encrypt(password, secretKey).toString();
+
+          
+            const userData = { name, email, password: encryptedPassword };
+            localStorage.setItem('user', JSON.stringify(userData));
+
             setMessage('Registration successful!');
             setTimeout(() => {
-                navigate('/login'); // Navigate to login page after success
-            }, 1000); // Delay to show success message
+                navigate('/login');
+            }, 1000);
         } else {
             setMessage('Registration failed. Please try again.');
         }
@@ -115,13 +116,13 @@ const Register = ({ toggleForm }) => {
 
             <Button text="Register" onClick={handleRegister} />
             
-            {message && <p className="message">{message}</p>} {/* Display success or failure message */}
+            {message && <p className="message">{message}</p>}
 
             <p className="toggle-text">
                 Already have an account?{' '}
-                <span className="toggle-link" onClick={toggleForm}>
-                <Link to="/login">Login Here</Link>
-                </span>
+                <Link to="/login" className="toggle-link">
+                    Login here
+                </Link>
             </p>
         </FormContainer>
     );
