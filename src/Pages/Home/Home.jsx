@@ -4,6 +4,7 @@ import mockData from './mockData';
 import { useState } from 'react';
 import Card from '../../Components/Card/Card';
 import PopupForm from '../../Components/PopupForm/PopupForm';
+import Nav from '../../Components/NavigationBar/Nav';
 
 const Home = () => {
     const [data, setData] = useState(mockData);
@@ -122,6 +123,8 @@ const Home = () => {
     };
 
     return (
+        <>
+        <Nav />
         <DragDropContext onDragEnd={onDragEnd}>
      
             <div className="kanban">
@@ -202,6 +205,7 @@ const Home = () => {
                 />
             </div>
         </DragDropContext>
+        </>
     );
 };
 

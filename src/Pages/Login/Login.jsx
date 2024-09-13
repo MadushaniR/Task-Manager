@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { useAuth } from '../../context/AuthContext'; 
-import userImg from '../../assets/person.png';
 import emailImg from '../../assets/email.png';
 import passwordImg from '../../assets/password.png';
 import './login.css';
@@ -17,7 +16,7 @@ const Login = ({ toggleForm }) => {
 
     const handleLogin = () => {
         if (email && password) {
-            login(); 
+            login(email);  // Pass email or username to login
             alert('Login successful!');
             navigate('/home'); 
         } else {
