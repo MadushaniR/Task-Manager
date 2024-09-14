@@ -4,16 +4,16 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [user, setUser] = useState(null); // State to store the user
+    const [user, setUser] = useState(null); 
 
     const login = (username) => {
         setIsAuthenticated(true);
-        setUser(username); // Set the username on login
+        setUser(username); 
     };
     
     const logout = () => {
         setIsAuthenticated(false);
-        setUser(null); // Clear the user on logout
+        setUser(null); 
     };
 
     return (
