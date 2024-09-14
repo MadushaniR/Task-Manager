@@ -1,4 +1,5 @@
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid';
+
 const mockData = [
     {
         id: uuidv4(),
@@ -6,22 +7,21 @@ const mockData = [
         tasks: [
             {
                 id: uuidv4(),
-                title: 'Learn JavaScript',
-                description: 'Learn JavaScript to build interactive websites.',
-                priority: 'high' 
-
+                title: 'Frontend UI Design',
+                description: 'Design the user interface for the application.',
+                priority: 'high'
             },
             {
                 id: uuidv4(),
-                title: 'Learn Git',
-                description: 'Learn Git to manage your codebase.',
-                priority: 'low' 
+                title: 'Backend API Development',
+                description: 'Develop the backend APIs for the application.',
+                priority: 'medium'
             },
             {
                 id: uuidv4(),
-                title: 'Learn Python',
-                description: 'Learn Python to build web applications.',
-                priority: 'medium' 
+                title: 'Bug Fix: CSS Layout',
+                description: 'Fix layout issues in the CSS styles.',
+                priority: 'low'
             },
         ]
     },
@@ -31,15 +31,15 @@ const mockData = [
         tasks: [
             {
                 id: uuidv4(),
-                title: 'Learn CSS',
-                description: 'Learn CSS to style your websites.',
-                priority: 'low' 
+                title: 'Frontend Responsive Design',
+                description: 'Implement responsive design for mobile and tablet views.',
+                priority: 'medium'
             },
             {
                 id: uuidv4(),
-                title: 'Learn Golang',
-                description: 'Learn Golang to build scalable applications.',
-                priority: 'medium' 
+                title: 'Backend Database Integration',
+                description: 'Integrate the application with the database.',
+                priority: 'high'
             }
         ]
     },
@@ -49,9 +49,9 @@ const mockData = [
         tasks: [
             {
                 id: uuidv4(),
-                title: 'Learn CSS',
-                description: 'Learn CSS to style your websites.',
-                priority: 'high' 
+                title: 'Code Review: Authentication Module',
+                description: 'Review the code for the authentication module.',
+                priority: 'high'
             }
         ]
     },
@@ -61,8 +61,8 @@ const mockData = [
         tasks: [
             {
                 id: uuidv4(),
-                title: 'Learn HTML',
-                description: 'Learn HTML to create web pages.',
+                title: 'Frontend Form Validation',
+                description: 'Implement form validation on the frontend.',
                 priority: 'low'
             }
         ]
