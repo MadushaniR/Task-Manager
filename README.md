@@ -1,8 +1,3 @@
-# Access to my Todo Application
-
-You can access my Todo Application at [Task Treak](https://tasktreaktodo.netlify.app/login).
-
-Direct URL: https://tasktreaktodo.netlify.app/login
 
 
 # Getting Started with Create React App
