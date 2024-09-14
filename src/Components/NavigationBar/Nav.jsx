@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './nav.css';
 import todoImg from '../../assets/todoImg.png';
-import { FaUserCircle } from 'react-icons/fa'; 
+import { FaUserCircle, FaHome, FaQuestionCircle, FaSignOutAlt } from 'react-icons/fa';
 
 const Nav = () => {
     const [username, setUsername] = useState(null);
@@ -26,25 +26,38 @@ const Nav = () => {
             <div className="nav-left">
                 <Link to="/home" className="nav-logo-container">
                     <img src={todoImg} alt="Home" className="nav-logo" />
-                    <span className="app-name">TaskTrek</span>
+                    <span className="app-name desktop-only">TaskTrek</span>
                 </Link>
             </div>
             <div className="nav-center">
-                <Link to="/home" className="nav-option">Home</Link>
-                <Link to="/help" className="nav-option">Help</Link>
+                <div className="nav-links">
+                    <Link to="/home" className="nav-option desktop-only">Home</Link>
+                    <Link to="/help" className="nav-option desktop-only">Help</Link>
+                    <Link to="/home" className="nav-icon mobile-only">
+                        <FaHome />
+                    </Link>
+                    <Link to="/help" className="nav-icon mobile-only">
+                        <FaQuestionCircle />
+                    </Link>
+                </div>
             </div>
             <div className="nav-right">
                 {username ? (
-                    <div className="user-info">
+                    <div className="user-info desktop-only">
                         <FaUserCircle className="user-icon" />
                         <span className="username">{username}</span>
                         <button className="logout-button" onClick={handleLogout}>
-                            Logout
+                            <FaSignOutAlt />
                         </button>
                     </div>
                 ) : (
-                    <Link to="/login">Login</Link>
+                    <Link to="/login" className="nav-icon mobile-only">
+                        <FaUserCircle />
+                    </Link>
                 )}
+                <button className="logout-button mobile-only" onClick={handleLogout}>
+                    <FaSignOutAlt />
+                </button>
             </div>
         </nav>
     );
