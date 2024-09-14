@@ -1,7 +1,7 @@
 import React from 'react';
 import './input-field.css';
 
-const InputField = ({ type, placeholder, icon, value, onChange, error }) => {
+const InputField = ({ type, placeholder, icon, value, onChange, error, name }) => {
     return (
         <div className="input-field">
             <div className="input-container">
@@ -12,6 +12,7 @@ const InputField = ({ type, placeholder, icon, value, onChange, error }) => {
                     value={value}
                     onChange={onChange}
                     className={`input ${error ? 'error-input' : ''}`}
+                    name={name}
                 />
             </div>
             {error && <p className="error-message">{error}</p>}

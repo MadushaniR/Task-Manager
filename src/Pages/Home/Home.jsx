@@ -51,9 +51,8 @@ const Home = () => {
         }
     };
 
-    const handleAddTask = (e) => {
-        e.preventDefault();
-        if (!newTask.title.trim() || !newTask.description.trim()) return;
+    const handleAddTask = (values) => {
+        if (!values.title.trim() || !values.description.trim()) return;
 
         const newData = data.map(section => {
             if (section.id === currentSection) {
@@ -61,7 +60,7 @@ const Home = () => {
                     ...section,
                     tasks: [
                         ...section.tasks,
-                        { id: Math.random().toString(), title: newTask.title, description: newTask.description, priority: newTask.priority }
+                        { id: Math.random().toString(), title: values.title, description: values.description, priority: values.priority }
                     ]
                 };
             }
@@ -72,14 +71,13 @@ const Home = () => {
         resetForm();
     };
 
-    const handleEditTask = (e) => {
-        e.preventDefault();
+    const handleEditTask = (values) => {
         const newData = data.map(section => {
             if (section.id === currentSection) {
                 return {
                     ...section,
                     tasks: section.tasks.map(task =>
-                        task.id === editingTask.id ? { ...task, title: newTask.title, description: newTask.description, priority: newTask.priority } : task
+                        task.id === editingTask.id ? { ...task, title: values.title, description: values.description, priority: values.priority } : task
                     )
                 };
             }
@@ -143,85 +141,76 @@ const Home = () => {
         }
     };
 
-
     return (
         <>
             <Nav />
             <DragDropContext onDragEnd={onDragEnd}>
                 <div className="kanban">
-                    {
-                        data.map(section => (
-                            <Droppable
-                                key={section.id}
-                                droppableId={section.id}
-                            >
-                                {(provided) => (
-                                    <div
-                                        {...provided.droppableProps}
-                                        className='kanban__section'
-                                        ref={provided.innerRef}
-                                    >
-                                        <div className="kanban__section__title">
-                                            {section.title}
-                                            <span className="task-count">({getTaskCount(section.id)})</span>
-                                        </div>
-                                        <div className="kanban__section__content">
-                                            {
-                                                section.tasks.map((task, index) => (
-                                                    <Draggable
-                                                        key={task.id}
-                                                        draggableId={task.id}
-                                                        index={index}
-                                                    >
-                                                        {(provided, snapshot) => (
-                                                            <div
-                                                                ref={provided.innerRef}
-                                                                {...provided.draggableProps}
-                                                                {...provided.dragHandleProps}
-                                                                style={{
-                                                                    ...provided.draggableProps.style,
-                                                                    opacity: snapshot.isDragging ? '0.5' : '1'
-                                                                }}
-                                                            >
-                                                                <Card>
-                                                                    <div className="task-header">
-                                                                        <div className="task-title">{task.title}</div>
-                                                                        <span className={getPriorityClass(task.priority)}>
-                                                                            {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
-                                                                        </span>
-                                                                    </div>
-                                                                    <div className="task-des">{task.description}</div>
-                                                                    <button
-                                                                        className="edit-task-btn"
-                                                                        onClick={() => openEditForm(task, section.id)}
-                                                                    >
-                                                                        <FontAwesomeIcon icon={faEdit} />
-                                                                    </button>
-                                                                    <button
-                                                                        className="delete-task-btn"
-                                                                        onClick={() => handleDeleteTask(task.id, section.id)}
-                                                                    >
-                                                                        <FontAwesomeIcon icon={faTrashAlt} />
-                                                                    </button>
-                                                                </Card>
-                                                            </div>
-                                                        )}
-                                                    </Draggable>
-                                                ))
-                                            }
-                                            {provided.placeholder}
-                                        </div>
-                                        <button
-                                            className="add-task-btn"
-                                            onClick={() => openPopupForm(section.id)}
-                                        >
-                                            <FontAwesomeIcon icon={faPlus} />
-                                        </button>
+                    {data.map(section => (
+                        <Droppable key={section.id} droppableId={section.id}>
+                            {(provided) => (
+                                <div
+                                    {...provided.droppableProps}
+                                    className='kanban__section'
+                                    ref={provided.innerRef}
+                                >
+                                    <div className="kanban__section__title">
+                                        {section.title}
+                                        <span className="task-count">({getTaskCount(section.id)})</span>
                                     </div>
-                                )}
-                            </Droppable>
-                        ))
-                    }
+                                    <div className="kanban__section__content">
+                                        {section.tasks.map((task, index) => (
+                                            <Draggable key={task.id} draggableId={task.id} index={index}>
+                                                {(provided, snapshot) => (
+                                                    <div
+                                                        ref={provided.innerRef}
+                                                        {...provided.draggableProps}
+                                                        {...provided.dragHandleProps}
+                                                        style={{
+                                                            ...provided.draggableProps.style,
+                                                            opacity: snapshot.isDragging ? '0.5' : '1'
+                                                        }}
+                                                    >
+                                                        <Card>
+                                                            <div className="task-header">
+                                                                <div className="task-title">{task.title}</div>
+                                                                <span className={getPriorityClass(task.priority)}>
+                                                                    {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
+                                                                </span>
+                                                            </div>
+                                                            <div className="task-des">{task.description}</div>
+                                                            <button
+                                                                type="button"
+                                                                className="edit-task-btn"
+                                                                onClick={() => openEditForm(task, section.id)}
+                                                            >
+                                                                <FontAwesomeIcon icon={faEdit} />
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                className="delete-task-btn"
+                                                                onClick={() => handleDeleteTask(task.id, section.id)}
+                                                            >
+                                                                <FontAwesomeIcon icon={faTrashAlt} />
+                                                            </button>
+                                                        </Card>
+                                                    </div>
+                                                )}
+                                            </Draggable>
+                                        ))}
+                                        {provided.placeholder}
+                                    </div>
+                                    <button
+                                        type="button"
+                                        className="add-task-btn"
+                                        onClick={() => openPopupForm(section.id)}
+                                    >
+                                        <FontAwesomeIcon icon={faPlus} />
+                                    </button>
+                                </div>
+                            )}
+                        </Droppable>
+                    ))}
                     <PopupForm
                         show={showForm}
                         onClose={resetForm}
