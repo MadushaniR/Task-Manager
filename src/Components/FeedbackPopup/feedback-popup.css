@@ -73,9 +73,9 @@
 }
 
 .popup-overlay.success .feedback-msg {
-    color: #33a0a3; 
+    color: #fff; 
 }
 
 .popup-overlay.error .feedback-msg {
-    color: red; 
+    color: #fff; 
 }
