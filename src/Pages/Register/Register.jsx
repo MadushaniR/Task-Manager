@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import userImg from '../../assets/person.png';
 import emailImg from '../../assets/email.png';
 import passwordImg from '../../assets/password.png';
@@ -11,59 +13,32 @@ import CryptoJS from 'crypto-js';
 import FeedbackPopup from '../../Components/FeedbackPopup/FeedbackPopup';
 
 const Register = ({ toggleForm }) => {
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [errors, setErrors] = useState({});
-    const [popupMessage, setPopupMessage] = useState(null); // Popup message
-    const [popupType, setPopupType] = useState(''); // Popup type ('success' or 'error')
     const navigate = useNavigate();
+    const [popupMessage, setPopupMessage] = React.useState(null);
+    const [popupType, setPopupType] = React.useState('');
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-    const validate = () => {
-        const newErrors = {};
-
-        if (!name.trim()) {
-            newErrors.name = 'Name is required';
-        }
-
-        if (!email.trim()) {
-            newErrors.email = 'Email is required';
-        } else if (!emailRegex.test(email)) {
-            newErrors.email = 'Invalid email format';
-        }
-
-        if (!password) {
-            newErrors.password = 'Password is required';
-        } else if (!passwordRegex.test(password)) {
-            newErrors.password = 'Password must be at least 8 characters long and include a number and a special character';
-        }
-
-        if (!confirmPassword) {
-            newErrors.confirmPassword = 'Confirm password is required';
-        } else if (password !== confirmPassword) {
-            newErrors.confirmPassword = 'Passwords do not match';
-        }
-
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-    };
-
-    const handleRegister = () => {
-        if (!validate()) {
-            return;
-        }
-
-        const registrationSuccess = true;
-
-        if (registrationSuccess) {
+    const formik = useFormik({
+        initialValues: {
+            name: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+        },
+        validationSchema: Yup.object({
+            name: Yup.string().required('Name is required'),
+            email: Yup.string().email('Invalid email format').required('Email is required'),
+            password: Yup.string()
+                .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, 'Password must be at least 8 characters long and include a number and a special character')
+                .required('Password is required'),
+            confirmPassword: Yup.string()
+                .oneOf([Yup.ref('password'), null], 'Passwords must match')
+                .required('Confirm password is required'),
+        }),
+        onSubmit: (values) => {
             const secretKey = 'mySecretKey';
-            const encryptedPassword = CryptoJS.AES.encrypt(password, secretKey).toString();
+            const encryptedPassword = CryptoJS.AES.encrypt(values.password, secretKey).toString();
 
-            const userData = { name, email, password: encryptedPassword };
+            const userData = { name: values.name, email: values.email, password: encryptedPassword };
             localStorage.setItem('user', JSON.stringify(userData));
 
             setPopupType('success');
@@ -71,11 +46,8 @@ const Register = ({ toggleForm }) => {
             setTimeout(() => {
                 navigate('/login');
             }, 1000);
-        } else {
-            setPopupType('error');
-            setPopupMessage('Registration failed. Please try again.');
-        }
-    };
+        },
+    });
 
     const closePopup = () => {
         setPopupMessage(null);
@@ -83,58 +55,56 @@ const Register = ({ toggleForm }) => {
 
     return (
         <FormContainer title="Register">
-            <InputField
-                type="text"
-                placeholder="Name"
-                icon={userImg}
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                error={errors.name}
-            />
-
-            <InputField
-                type="email"
-                placeholder="Email"
-                icon={emailImg}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                error={errors.email}
-            />
-
-            <InputField
-                type="password"
-                placeholder="Password"
-                icon={passwordImg}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                error={errors.password}
-            />
-
-            <InputField
-                type="password"
-                placeholder="Confirm Password"
-                icon={passwordImg}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                error={errors.confirmPassword}
-            />
-
-            <Button text="Register" onClick={handleRegister} />
-
-            <p className="toggle-text">
-                Already have an account?{' '}
-                <Link to="/login" className="toggle-link">
-                    Login here
-                </Link>
-            </p>
-
-            {popupMessage && (
-                <FeedbackPopup
-                    message={popupMessage}
-                    type={popupType}
-                    onClose={closePopup}
+            <form onSubmit={formik.handleSubmit}>
+                <InputField
+                    type="text"
+                    placeholder="Name"
+                    icon={userImg}
+                    {...formik.getFieldProps('name')}
+                    error={formik.errors.name && formik.touched.name ? formik.errors.name : ''}
                 />
-            )}
+
+                <InputField
+                    type="email"
+                    placeholder="Email"
+                    icon={emailImg}
+                    {...formik.getFieldProps('email')}
+                    error={formik.errors.email && formik.touched.email ? formik.errors.email : ''}
+                />
+
+                <InputField
+                    type="password"
+                    placeholder="Password"
+                    icon={passwordImg}
+                    {...formik.getFieldProps('password')}
+                    error={formik.errors.password && formik.touched.password ? formik.errors.password : ''}
+                />
+
+                <InputField
+                    type="password"
+                    placeholder="Confirm Password"
+                    icon={passwordImg}
+                    {...formik.getFieldProps('confirmPassword')}
+                    error={formik.errors.confirmPassword && formik.touched.confirmPassword ? formik.errors.confirmPassword : ''}
+                />
+
+                <Button text="Register" type="submit" />
+
+                <p className="toggle-text">
+                    Already have an account?{' '}
+                    <Link to="/login" className="toggle-link">
+                        Login here
+                    </Link>
+                </p>
+
+                {popupMessage && (
+                    <FeedbackPopup
+                        message={popupMessage}
+                        type={popupType}
+                        onClose={closePopup}
+                    />
+                )}
+            </form>
         </FormContainer>
     );
 };
