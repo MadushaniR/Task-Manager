@@ -14,9 +14,12 @@ import FeedbackPopup from '../../Components/FeedbackPopup/FeedbackPopup';
 
 const Register = ({ toggleForm }) => {
     const navigate = useNavigate();
+
+    // state for controlling feedback popup
     const [popupMessage, setPopupMessage] = React.useState(null);
     const [popupType, setPopupType] = React.useState('');
 
+    // formik setup for form handling and validation
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -35,12 +38,15 @@ const Register = ({ toggleForm }) => {
                 .required('Confirm password is required'),
         }),
         onSubmit: (values) => {
-            const secretKey = 'mySecretKey';
+            // encrypt password before storing
+            const secretKey = 'TaskTreak';
             const encryptedPassword = CryptoJS.AES.encrypt(values.password, secretKey).toString();
 
+            // save user data to localStorage
             const userData = { name: values.name, email: values.email, password: encryptedPassword };
             localStorage.setItem('user', JSON.stringify(userData));
 
+            // show success popup and redirect to login page
             setPopupType('success');
             setPopupMessage('Registration successful!');
             setTimeout(() => {
@@ -49,6 +55,7 @@ const Register = ({ toggleForm }) => {
         },
     });
 
+    // function to close feedback popup
     const closePopup = () => {
         setPopupMessage(null);
     };

@@ -20,11 +20,13 @@ const Home = () => {
         priority: 'low'
     });
 
+    // function to handle drag and drop of tasks
     const onDragEnd = (result) => {
         if (!result.destination) return;
         const { source, destination } = result;
 
         if (source.droppableId !== destination.droppableId) {
+            // find source and destination columns
             const sourceColIndex = data.findIndex(e => e.id === source.droppableId);
             const destinationColIndex = data.findIndex(e => e.id === destination.droppableId);
 
@@ -34,9 +36,11 @@ const Home = () => {
             const sourceTask = [...sourceCol.tasks];
             const destinationTask = [...destinationCol.tasks];
 
+            // move task from source to destination
             const [removed] = sourceTask.splice(source.index, 1);
             destinationTask.splice(destination.index, 0, removed);
 
+            // update state with new task positions
             const newData = [...data];
             newData[sourceColIndex] = {
                 ...sourceCol,
@@ -51,6 +55,7 @@ const Home = () => {
         }
     };
 
+    // function to handle adding a new task
     const handleAddTask = (values) => {
         if (!values.title.trim() || !values.description.trim()) return;
 
@@ -71,6 +76,7 @@ const Home = () => {
         resetForm();
     };
 
+    // function to handle editing an existing task
     const handleEditTask = (values) => {
         const newData = data.map(section => {
             if (section.id === currentSection) {
@@ -88,6 +94,7 @@ const Home = () => {
         resetForm();
     };
 
+    // function to reset the form and state
     const resetForm = () => {
         setNewTask({ title: '', description: '', priority: 'low' });
         setEditingTask(null);
@@ -95,12 +102,14 @@ const Home = () => {
         setIsEditMode(false);
     };
 
+    // function to open the popup form for adding a new task
     const openPopupForm = (sectionId) => {
         setCurrentSection(sectionId);
         setShowForm(true);
         setIsEditMode(false);
     };
 
+    // function to open the popup form for editing an existing task
     const openEditForm = (task, sectionId) => {
         setCurrentSection(sectionId);
         setEditingTask(task);
@@ -109,6 +118,7 @@ const Home = () => {
         setIsEditMode(true);
     };
 
+    // function to handle task deletion
     const handleDeleteTask = (taskId, sectionId) => {
         const newData = data.map(section => {
             if (section.id === sectionId) {
@@ -123,11 +133,13 @@ const Home = () => {
         setData(newData);
     };
 
+    // function to get the count of tasks in a section
     const getTaskCount = (sectionId) => {
         const section = data.find(section => section.id === sectionId);
         return section ? section.tasks.length : 0;
     };
 
+    // function to get the CSS class for task priority
     const getPriorityClass = (priority) => {
         switch (priority) {
             case 'high':

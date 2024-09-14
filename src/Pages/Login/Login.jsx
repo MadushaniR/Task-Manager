@@ -14,10 +14,15 @@ import FeedbackPopup from '../../Components/FeedbackPopup/FeedbackPopup';
 
 const Login = ({ toggleForm }) => {
     const navigate = useNavigate();
+
+    // state for controlling feedback popup
     const [popupMessage, setPopupMessage] = React.useState(null);
     const [popupType, setPopupType] = React.useState('');
+
+    // authentication context for login function
     const { login } = useAuth();
 
+    // formik setup for form handling and validation
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -28,12 +33,15 @@ const Login = ({ toggleForm }) => {
             password: Yup.string().required('Password is required'),
         }),
         onSubmit: (values) => {
+            // retrieve stored user data from localStorage
             const storedUser = JSON.parse(localStorage.getItem('user'));
 
             if (storedUser) {
-                const secretKey = 'mySecretKey';
+                const secretKey = 'TaskTreak';
+                // decrypt stored password
                 const decryptedPassword = CryptoJS.AES.decrypt(storedUser.password, secretKey).toString(CryptoJS.enc.Utf8);
 
+                // validate credentials
                 if (storedUser.email === values.email && decryptedPassword === values.password) {
                     login(values.email);
                     setPopupType('success');
@@ -52,6 +60,7 @@ const Login = ({ toggleForm }) => {
         },
     });
 
+    // function to close feedback popup
     const closePopup = () => {
         setPopupMessage(null);
     };
