@@ -1,5 +1,4 @@
 .help-wrapper {
-
     margin-bottom: 10px;
     padding-bottom: 10px;
 }
@@ -33,7 +32,7 @@ h1 {
     background-color: #33a0a3;
     border-radius: 8px;
     padding: 1.5rem;
-    box-shadow: 0px 2px 70px -10px rgba(37, 177, 152, 0.6);
+    box-shadow: 0px 4px 15px rgba(102, 102, 255, 0.7);
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
@@ -43,7 +42,7 @@ h1 {
 }
 
 h2 {
-    color: #232323;
+    color: rgb(20, 28, 110);
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
 }
