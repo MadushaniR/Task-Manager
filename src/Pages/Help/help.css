@@ -23,9 +23,8 @@ h1 {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
-
 }
 
 .grid-item {
@@ -51,4 +50,11 @@ p {
     font-size: 1rem;
     color: #fff;
     text-align: justify;
+}
+
+
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
 }
